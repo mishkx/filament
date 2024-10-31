@@ -704,7 +704,7 @@
                         />
                     </x-filament-tables::table>
                 @endif
-            @elseif (($records !== null) && count($records))
+            @else
                 <x-filament-tables::table
                     :reorderable="$isReorderable"
                     :reorder-animation-duration="$getReorderAnimationDuration()"
@@ -1243,23 +1243,23 @@
                                 }}
                             </x-slot>
                         @endif
+                    @elseif ($records === null)
+                        <div class="h-32"></div>
+                    @elseif ($emptyState = $getEmptyState())
+                        {{ $emptyState }}
+                    @else
+                        <tr>
+                            <td colspan="{{ $columnsCount }}">
+                                <x-filament-tables::empty-state
+                                    :actions="$getEmptyStateActions()"
+                                    :description="$getEmptyStateDescription()"
+                                    :heading="$getEmptyStateHeading()"
+                                    :icon="$getEmptyStateIcon()"
+                                />
+                            </td>
+                        </tr>
                     @endif
                 </x-filament-tables::table>
-            @elseif ($records === null)
-                <div class="h-32"></div>
-            @elseif ($emptyState = $getEmptyState())
-                {{ $emptyState }}
-            @else
-                <tr>
-                    <td colspan="{{ $columnsCount }}">
-                        <x-filament-tables::empty-state
-                            :actions="$getEmptyStateActions()"
-                            :description="$getEmptyStateDescription()"
-                            :heading="$getEmptyStateHeading()"
-                            :icon="$getEmptyStateIcon()"
-                        />
-                    </td>
-                </tr>
             @endif
         </div>
 
